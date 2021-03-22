@@ -25,7 +25,7 @@ $ npm install
 
 Console Node server script located in `./console-server` folder. You can change `.env.development` file to modify server options
 
-Start server on localhost with port 8088, you full server url will be `http://localhost:8088` , this is where you need to connect from `console-remote` connector
+Start server on localhost with port 8088, your full server url will be `http://localhost:8088` , this is where you need to connect from `console-remote` connector
 
 ```sh
 $ node console-server
@@ -37,7 +37,7 @@ Start console application on `http://localhost:8090`
 $ npm start
 ```
 
-With your browser, open `http://localhost:8090` and you should see console remote web app
+With your browser, open `http://localhost:8090` and you should see Console Remote Web App
 
 [screen shot here]
 
@@ -55,11 +55,11 @@ consolere.connect({
 console.log('test log');
 ```
 
-In your browser, go to url `http://localhost:8090/my-private-server-channel` and you should see your `test log` output in the console app
+In your browser, go to url `http://localhost:8090/my-private-server-channel` and you should see your `test log` output in the Console App
 
 ### Deploy Console Server on Your Own Production Server
 
-Copy this repo's files to your production server and install node packages
+Copy this repo's files to your production server and install Node packages
 
 ```js
 npm i
@@ -69,7 +69,7 @@ npm i
 
 Change production options in `.env.production` file
 
-Run Node app in production with
+Run Node app in production env with
 
 ```js
 NODE_ENV=production npm run server
@@ -85,7 +85,7 @@ npm run build
 
 Copy all files in `./build` folder to your HTTP server root folder for your private remote console server domain
 
-See examples HTTP server configuration examples in `config/console.nginx.example.conf` and semi auto deployment script in `.shipit` files
+See examples of HTTP server configuration in `config/console.nginx.example.conf` and semi auto deployment script in `.shipit` files
 
 ## More Information
 
