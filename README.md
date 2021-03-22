@@ -39,7 +39,8 @@ $ npm start
 
 With your browser, open `http://localhost:8090` and you should see Console Remote Web App
 
-[screen shot here]
+<img width="886" alt="Screen Shot 2021-03-21 at 8 51 33 PM" src="https://user-images.githubusercontent.com/6027060/111929517-ee1f1100-8a8c-11eb-831d-217b3889b7af.png">
+
 
 In your connector script settings, use `server` option to connect to your locally running private server on port 8088
 
