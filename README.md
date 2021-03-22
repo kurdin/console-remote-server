@@ -2,7 +2,7 @@
 
 This is your own, private server of http://console.re/ service
 
-Using this repo you can install private server for JavaScript Remote Console and connect to it using https://github.com/kurdin/console-remote
+Using this repo you can install a private server for JavaScript Remote Console and connect to it using https://github.com/kurdin/console-remote
 
 You can try all Console Remote examples at **RunJS.co** <a href="https://runjs.co/s/g7LRa7LU1">https://runjs.co/s/g7LRa7LU1</a>
 
