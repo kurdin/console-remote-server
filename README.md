@@ -19,8 +19,8 @@ $ git clone https://github.com/kurdin/console-remote-server</textarea></pre></p>
 Go to repo folder and install Node packages
 
 ```js
-cd console-remote-server
-npm install
+$ cd console-remote-server
+$ npm install
 ```
 
 Console Node server script located in `./console-server` folder. You can change `.env.development` file to modify server options
