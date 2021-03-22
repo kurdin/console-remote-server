@@ -1,0 +1,61 @@
+{
+  "name": "console-remote-server",
+  "version": "2.1.11",
+  "description": "Private Console Remote Server. Self-Hosted Server and Application for Remote JavaScript Console",
+  "dependencies": {
+    "@adamwood/gulp-cssmin": "^0.2.1",
+    "chokidar": "~3.5.1",
+    "configuration": "~0.1.1",
+    "console-remote-client": "^2.1.4",
+    "custom-env": "^2.0.1",
+    "http-rewrite-middleware": "^0.1.6",
+    "is-kindof": "^3.0.1",
+    "localStorage": "^1.0.4",
+    "opn": "^4.0.2",
+    "performance-now": "^2.1.0",
+    "pump": "^1.0.3",
+    "socket.io": "^3.1.1",
+    "sprintf-js": "~1.0.2",
+    "underscore": "~1.7.0",
+    "ws": "^1.1.5"
+  },
+  "devDependencies": {
+    "del": "^2.2.2",
+    "ecstatic": "~4.1.4",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-react": "^6.10.3",
+    "eslint-plugin-standard": "^2.3.1",
+    "gulp": "^4",
+    "gulp-changed": "^2.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.7.0",
+    "gulp-html-replace": "^1.6.2",
+    "gulp-livereload": "^4.0.2",
+    "gulp-print": "^2.0.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-replace-template": "^0.1.2",
+    "gulp-rev": "^7.1.2",
+    "gulp-rev-replace": "^0.4.4",
+    "gulp-transform": "^1.1.0",
+    "gulp-uglify": "^2.1.2",
+    "gulp-util": "^3.0.8",
+    "html-minifier": "~4.0.0"
+  },
+  "scripts": {
+    "start": "gulp",
+    "build": "NODE_ENV=production gulp build",
+    "build:dev": "NODE_ENV=development gulp build",
+    "server": "node console-server"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/kurdin/console-remote-server"
+  },
+  "author": "Sergey Kurdin",
+  "license": "see LICENSE.md"
+}

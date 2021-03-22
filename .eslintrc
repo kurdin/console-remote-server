@@ -1,0 +1,53 @@
+{
+	"extends": [
+		"airbnb", "eslint:recommended"
+	],
+	"plugins": [
+		"standard", "promise"
+	],
+	"parserOptions": {
+		"ecmaFeatures": {
+			"modules": true
+		}
+	},
+	"globals": {
+		"window": true,
+		"document": true,
+		"fetch": true,
+		"store": true
+	},
+	"rules": {
+		"no-console": 1,
+		"import/no-dynamic-require": 0,
+		"import/no-unresolved": 0,
+		"import/no-extraneous-dependencies": 0,
+		"import/extensions": 0,
+		"strict": 0,
+		"semi": 2,
+		"no-extra-semi": 2,
+		"eqeqeq": [
+			2, "smart"
+		],
+		"no-unused-vars": 1,
+		"consistent-return": 1,
+		"max-len": [
+			"error", 180
+		],
+		"space-before-function-paren": 1,
+		"max-statements": [
+			2, 50
+		],
+		"max-depth": [
+			2, 50
+		],
+		"complexity": [
+			2, 50
+		],
+		"max-params": [
+			2, 8
+		],
+		"max-nested-callbacks": [
+			2, 6
+		]
+	}
+}

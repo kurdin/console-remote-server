@@ -1,0 +1,16 @@
+host='usename@your-public-host-ip'
+path='/home/www/console-server'
+SSH_PORT='-p 22'
+
+[server]
+SSH_HOST='usename@your-public-host-ip'
+SSH_PORT='-p 22'
+echo "Deployment to LIVE on production server";
+cd /home/gits/console-server
+git reset --hard HEAD 
+git pull
+npm prune
+npm install
+NODE_ENV=production ./node_modules/.bin/gulp build
+rsync -avhW --delete --exclude .git build/* /home/www/console-server/build
+service nginx restart

@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Console.Re Private Server | Remote JavaScript Console</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+
+    <link rel="shortcut icon" href="/assets/img/favicon.png" />
+    <link rel="stylesheet" href="/www/css/www-bundle.css" />
+  </head>
+
+  <body class="home-template">
+    <header id="site-head">
+      <div class="vertical">
+        <div id="site-head-content" class="inner">
+          <h1 class="blog-title">
+            Console.<span class="elre">Re</span><span class="version">{{consoleVersion}}</span> Private
+          </h1>
+          <h2 class="blog-description">Private Server and Remote JavaScript Console App</h2>
+          <a class="btn goto" href="#API">API Documentation</a>
+          <a class="btn goto" target="_blank" href="https://runjs.co/s/g7LRa7LU1">Try at RunJS</a>
+          <a class="btn goto" target="_blank" href="https://github.com/kurdin/console-remote-server">GitHub</a>
+          <i id="header-arrow" class="icon-angle-down"></i>
+          <div class="chprefix">
+            <span class="open">{{consoleHost}}/</span>
+            <input value="" type="text" class="channel" spellcheck="false" />
+            <button class="btn gray go" type="button">go</button>
+            <p class="chperror">Enter your own channel name <u>or</u></p>
+            <p class="chrandom"><a href="#" class="random btn">generate random channel name</a></p>
+          </div>
+          <p class="chpmessage">Going to channel [<b></b>] please wait.</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="content" role="main">
+      <div class="fixed-nav"></div>
+
+      <div class="post-holder">
+        <article class="post first">
+          <header class="post-header">
+            <h2 class="post-title">About<span>&nbsp;Console.Re</span></h2>
+          </header>
+          <section class="post-content">
+            <p>
+              Console.Re is <b>remote JavaScript console</b>. You can send log, debug or test information from any
+              webpage, web mobile app or node.js server to remote logger and view results on any device: tablet, phone
+              or desktop in a separate browser window.
+            </p>
+            <p>
+              Connector script extends <span class="code">console</span> object adding new methods for sending messages
+              to remote logger with:
+            </p>
+            <p class="api-intro">
+              <a href="#consolerelog"><span class="code">console.re.log()</span></a>
+              <a href="#consolereinfo"><span class="code">console.re.info()</span></a>
+              <a href="#consoleredebug"><span class="code">console.re.debug()</span></a>
+              <a href="#consolerewarn"><span class="code">console.re.warn()</span></a>
+              <a href="#consolereerror"><span class="code">console.re.error()</span></a>
+              <a href="#consolerecount"><span class="code">console.re.count()</span></a>
+              <a href="#consoleretest"><span class="code">console.re.test()</span></a>
+              <a href="#consolereassert"><span class="code">console.re.assert()</span></a>
+              <a href="#consoleretime"><span class="code">console.re.time()</span></a>
+              <a href="#consolerecss"><span class="code">console.re.type()</span></a>
+              <a href="#consoleretimeend"><span class="code">console.re.timeEnd()</span></a>
+              <a href="#consoleresize"><span class="code">console.re.now()</span></a>
+              <a href="#consoleretrace"><span class="code">console.re.trace()</span></a>
+              <a href="#consolereclear"><span class="code">console.re.clear()</span></a>
+              <a href="#consolereclear"><span class="code">console.re.mark()</span></a>
+            </p>
+            <p>
+              Moreover, while using in browsers, you can log information about DOM elements, CSS properties, track Media
+              Queries and Window size changes with:
+            </p>
+            <p class="api-intro">
+              <a href="#consoleresize"><span class="code">console.re.size()</span></a>
+              <a href="#consolerecss"><span class="code">console.re.css()</span></a>
+              <a href="#consoleremedia"><span class="code">console.re.media()</span></a>
+            </p>
+
+            <h2 class="post-title" item="whats-new">What's New</h2>
+            <section class="post-content">
+              <h5>Console API has new methods.</h5>
+              <p>You can send more information from client to logger with:</p>
+
+              <p>
+                <span class="code">console.re.now(label)</span> - returns the relative distance between two time points,
+                measured in milliseconds
+              </p>
+              <p><span class="code">console.re.type()</span> - returns the type of a variable or property</p>
+              <p>
+                <span class="code">console.re.mark([label])</span> - action to mark current log position in console
+                output with optional label
+              </p>
+
+              <h5>Console connector has a new options:</h5>
+              <p>
+                <span class="code">redirectDefaultConsoleToRemote</span> - (:boolean) if true, default calls to
+                <span class="code">console.[log|warn|error|debug]</span> methods will be redirected to remote console
+                log calls
+              </p>
+
+              <p>
+                <span class="code">disableDefaultConsoleOutput</span> (:boolean) - if true, default console log output
+                will be removed for all remote console log calls
+              </p>
+
+              <p>
+                <span class="code">server</span> (:string) - remote console server full url, to connect and output
+                remote logs to another remote console server, default is <span class="code">http://console re</span>
+              </p>
+
+              <h5>Console API shortcuts:</h5>
+              <p></p>
+              <h6><i>relog() shortcut for console.re.log()</i></h6>
+              <p>
+                Instead of using <span class="code">console.re.log('test')</span>, now you can use a shortcut
+                <span class="code">relog('test')</span>
+              </p>
+              <h6><i>re.[api]() shortcut for console.re.[api]()</i></h6>
+              <p>
+                Instead of using <span class="code">console.re.log('test')</span>, now you can use a shortcut
+                <span class="code">re.log('test')</span> or <span class="code">console.re.test('test')</span> has
+                shortcuts <span class="code">re.test('test')</span>
+              </p>
+              <h6><i>console.re.[api] shortcuts</i></h6>
+
+              <p>
+                Instead of using <span class="code">console.re.log('test')</span>, now you can use a shortcut
+                <span class="code">console.re.l('test')</span> or
+                <span class="code">re.l('test')</span>
+              </p>
+
+              <p>
+                <a href="https://github.com/kurdin/console-remote#full-list-of-api-shortcuts" target="_blank"
+                  >Full list of API shortcuts</a
+                >
+              </p>
+            </section>
+
+            <h3>Supported Platforms</h3>
+            <p>
+              Connector (client) script works in all major browsers (desktop or mobile) and node.js servers running on
+              Linux, Mac, and Windows.
+            </p>
+            <h4>Desktop browsers:</h4>
+            <ul>
+              <li>Microsoft Edge 1+</li>
+              <li>Google Chrome 4+</li>
+              <li>Mozilla Firefox 3+</li>
+              <li>Apple Safari 3+</li>
+              <li>Opera 10+</li>
+            </ul>
+
+            <h4>Mobile browsers:</h4>
+
+            <ul>
+              <li>iPhone Safari</li>
+              <li>iPad Safari</li>
+              <li>Android WebKit</li>
+              <li>WebOs WebKit</li>
+              <li>Smart TV</li>
+            </ul>
+
+            <h4>Servers:</h4>
+
+            <ul>
+              <li>Node.js</li>
+              <li>Shell via Command Line Interface</li>
+            </ul>
+
+            <h3>Features</h3>
+
+            <ul class="features">
+              <li>Realtime, cross browser development and device independent testing</li>
+              <li>Remote logging and debugging with extended console API</li>
+              <li>View logs on any mobile device, tablet or phones (iOS, Android, Windows)</li>
+              <li>Easy to read, log output for Objects, Array, JSON, HTML and CSS</li>
+              <li>Faster Responsive Design development with Media Query logging and tracking</li>
+              <li>Watch Media Query changes on browser resize and device orientation change</li>
+              <li>Using [BBcodes] display log information in different styles and colors</li>
+              <li>Better logging output with string and number interpolation using %s and %d</li>
+              <li>Connector script is light, framework independent, pure JavaScript solution</li>
+              <li>Supports major browsers and can be used for desktop and mobile web apps</li>
+              <li>Works on server in Node.js running on Linux, Mac, Windows</li>
+              <li>Command line (CLI) on server allows to send remote logs from OS shell</li>
+            </ul>
+
+            <p>Enjoy faster web development process!</p>
+          </section>
+        </article>
+
+        <div class="post-after"></div>
+      </div>
+
+      <div class="post-holder" id="install">
+        <article class="post">
+          <header class="post-header">
+            <h2 class="post-title">How to install</h2>
+          </header>
+          <section class="post-content">
+            <p>Install connector script then use Console API from your JavaScript.</p>
+            <h4>Install with single <span class="code dark">&lt;script&gt;</span> tag</h4>
+
+            <p>
+              1) open your main HTML file and include <span class="code dark">connector.js</span> script FIRST thing in
+              <span class="code dark">&lt;head&gt;</span> tag or BEFORE any other scripts:
+            </p>
+
+            <pre
+              class="code cm-s-default"
+            ><textarea class="rawcode html"><script src="//console.re/connector.js" data-channel="YOUR-CHANNEL-NAME" data-server="OPTIONAL-PRIVATE-SERVER-URL" id="consolerescript"></script></textarea></pre>
+            <p class="example-switch"><a href="#">Show example</a></p>
+
+            <div class="example">
+              <pre class="code cm-s-default nowrap"><textarea class="rawcode html">
+<!DOCTYPE html>
+<html>
+  <head>
+  <script
+    src="//console.re/connector.js?v=2"
+    id="consolerescript"
+    data-server="http://console.re"
+    data-channel="YOUR-CHANNEL-NAME"
+    data-options="redirectDefaultConsoleToRemote"
+  ></script>
+    <script src="/js/your-script1.js"></script>
+    <script src="/js/your-script2.js"></script>
+  ...
+</textarea>
+            </pre>
+            </div>
+
+            <p>
+              2) [<i class="required">required</i>] change <span class="code dark">YOUR-CHANNEL-NAME</span> in attribute
+              <span class="code dark">data-channel</span> to
+              <span class="code dark">your-project-channel-name</span> (any string), save HTML file.
+            </p>
+
+            <p>3) add in your JavaScript code:</p>
+
+            <pre class="code cm-s-default"><textarea class="rawcode">console.re.log('remote log test');</textarea></pre>
+
+            <p>
+              4) open console remote logger in a separate browser on your favorite device:
+              <span class="code dark">http://console.re/your-project-channel-name</span>
+            </p>
+
+            <p>
+              5) reload your webpage or app and you should see in logger the following output:
+              <span class="code dark">[LOG] remote log test</span>
+            </p>
+
+            <h4>Install with import (recommended)</h4>
+
+            <p>1) install console-remote-client module:</p>
+
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+npm install console-remote-client              
+</textarea></pre>
+
+            <p>2) import once into your javascript file. (in your app root index.js file)</p>
+
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+import consolere from 'console-remote-client'             
+</textarea></pre>
+
+            <p>3) connect with options for your server and channel:</p>
+
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+consolere.connect({
+  server: 'https://console.re', // optional, default: https://console.re
+  channel: 'YOUR-CHANNEL-NAME', // required
+  redirectDefaultConsoleToRemote: true, // optional, default: false
+  disableDefaultConsoleOutput: true, // optional, default: false
+});
+</textarea></pre>
+
+            <p>
+              4) [<i class="required">required</i>] change <span class="code dark">YOUR-CHANNEL-NAME</span> in attribute
+              <span class="code dark">data-channel</span> to
+              <span class="code dark">your-project-channel-name</span> (any string)
+            </p>
+            <p>
+              5) in your JavaScript code: <span class="code dark">console.re.log('remote log test');</span> or
+              <span class="code dark">console.log('remote log test');</span> if
+              <span class="code dark">redirectDefaultConsoleToRemote</span> is true.
+            </p>
+
+            <p>
+              6) open remote logger in a separate browser at:
+              <span class="code dark">http://console.re/your-project-channel-name</span>
+            </p>
+
+            <p>
+              7) reload your webpage or app and you should see in logger the following output:
+              <span class="code dark">[LOG] remote log test</span>
+            </p>
+
+            <h4>Installation for Node.Js</h4>
+
+            <p>
+              1) Install <span class="code dark">console-remote-client</span> module using
+              <span class="code dark">npm</span>:
+            </p>
+
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+$ npm install console-remote-client
+</textarea></pre>
+            <p>
+              2) In your node.js app, use <span class="code dark">require</span> to include module and connect to remote
+              server:
+            </p>
+
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+const consolere = require('console-remote-client').connect({server: 'https://console.re', channel: 'YOUR-CHANNEL-NAME'});
+</textarea></pre>
+
+            <p>
+              3) [<i class="required">required</i>] change connect function argument
+              <span class="code dark">YOUR-CHANNEL-NAME</span> to your own
+              <span class="code dark">your-project-channel-name</span> (any string)
+            </p>
+
+            <p>4) add in your code:</p>
+            <pre class="code cm-s-default"><textarea class="rawcode">console.re.log('remote log test');</textarea></pre>
+
+            <p>
+              5) open console remote logger in a separate browser on your favorite device:
+              <span class="code dark">http://console.re/your-project-channel-name</span>
+            </p>
+            <p>
+              6) restart your node.js app, and you should see in logger the following output:
+              <span class="code dark">[LOG] remote log test</span>
+            </p>
+
+            <h4>Command Line (CLI)</h4>
+            <p>Install it globally with <span class="code dark">npm</span> using:</p>
+
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+$ npm install console-remote-client -g
+</textarea></pre>
+
+            <p>or get local copy and use <span class="code dark">npm link</span>:</p>
+
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+$ git clone https://github.com/kurdin/console-remote.git
+$ cd console-remote
+$ npm link
+</textarea></pre>
+
+            <p>Run with:</p>
+
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+$ consolere -c YOUR-CHANNEL-NAME log 'sent from command line' 
+</textarea></pre>
+
+            <p>
+              you need to change -c option YOUR-CHANNEL-NAME to your project-channel-name (any string) You can edit
+              ./console-remote-client/bin/config.js and permanently change YOUR-CHANNEL-NAME then you can run it without
+              -c option:
+            </p>
+
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+$ consolere info 'sent from command line'
+</textarea></pre>
+
+            <p>to see all available options and commands, use <span class="code dark"> consolere --help</span></p>
+
+            <h4 id="update">Update Node.Js and CLI client</h4>
+
+            <p>
+              With release of new version please update <span class="code dark">console-remote-client</span> module
+              using <span class="code dark">npm</span>:
+            </p>
+
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+$ npm update console-remote-client@2
+</textarea></pre>
+
+            <p>
+              If you using CLI please update <span class="code dark">console-remote-client</span> module using
+              <span class="code dark">npm</span> with global argument:
+            </p>
+
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+$ npm update console-remote-client@2 -g
+</textarea></pre>
+
+            <p></p>
+
+            <h4>Random Channel Name</h4>
+            <p>
+              You can directly open random channel name using shortcut url
+              <a href="http://console.re/new">http://console.re/new</a>, then click on
+              <span class="code dark">How to Connect?</span> link to see connection instruction.
+            </p>
+          </section>
+        </article>
+        <div class="post-after"></div>
+      </div>
+
+      <div class="post-holder" id="API">
+        <article class="post">
+          <header class="post-header">
+            <h2 class="post-title">Console.Re API</h2>
+          </header>
+          <section class="post-content api">
+            <h5 id="consolerelog">console.re.log()</h5>
+            <p>
+              Sends <span class="code">LOG</span> level message with <span class="code">object</span>,
+              <span class="code">array</span>, <span class="code">string</span>, <span class="code">number</span> or
+              <span class="code">DOM Element</span> to the remote console.
+            </p>
+            <pre
+              class="code cm-s-default"
+            ><textarea class="rawcode">console.re.log(object|array|selector|'string %s',string|'string %d',number[,object, ...]);</textarea></pre>
+
+            <h5 id="consolereinfo">console.re.info()</h5>
+            <p>
+              Sends <span class="code">INFO</span> level message to remote console with optional arguments same as
+              <span class="code">console.re.log()</span>.
+            </p>
+            <pre class="code cm-s-default"><textarea class="rawcode">console.re.info(message);</textarea></pre>
+
+            <h5 id="consolerewarn">console.re.warn()</h5>
+            <p>
+              Sends <span class="code">WARN</span> level message to remote console with optional arguments same as
+              <span class="code">console.re.log()</span>.
+            </p>
+            <pre class="code cm-s-default"><textarea class="rawcode">console.re.warn(message);</textarea></pre>
+
+            <h5 id="consoleredebug">console.re.debug()</h5>
+            <p>
+              Sends <span class="code">DEBUG</span> level message to remote console with optional arguments same as
+              <span class="code">console.re.log()</span>.
+            </p>
+            <pre class="code cm-s-default"><textarea class="rawcode">console.re.debug(message);</textarea></pre>
+
+            <h5 id="consolereerror">console.re.error()</h5>
+            <p>
+              Sends <span class="code">ERROR</span> level message to remote console with optional arguments same as
+              <span class="code">console.re.log()</span>.
+            </p>
+            <pre class="code cm-s-default"><textarea class="rawcode">console.re.error(message);</textarea></pre>
+
+            <h5 id="consoleresize">console.re.size()</h5>
+            <p>
+              Displays size of DOM element(s), <span class="code">width</span> and <span class="code">height</span> for
+              given <span class="code">selector(s)</span> or displays current <span class="code">Window</span> size if
+              called with no arguments. Use any <span class="code">jQuery</span> selectors if
+              <span class="code">jQuery</span> library included in project. <i>Browser only API.</i>
+            </p>
+            <pre
+              class="code cm-s-default"
+            ><textarea class="rawcode">console.re.size([selector],[,selector,...]);</textarea></pre>
+
+            <h5 id="consolerecss">console.re.css()</h5>
+            <p>
+              Displays value of specified CSS <span class="code">properties</span> in array for given
+              <span class="code">selector(s)</span>. Use any <span class="code">jQuery</span> selectors if
+              <span class="code">jQuery</span> library included in project. <i>Browser only API.</i>
+            </p>
+            <pre
+              class="code cm-s-default"
+            ><textarea class="rawcode">console.re.css(selector,['property','property2', ... 'propertyN']);</textarea></pre>
+
+            <h5 id="consoleremedia">console.re.media()</h5>
+            <p>
+              Displays value of CSS Media Queries for current <span class="code">Window</span> size. An optional
+              <span class="code">'watch'</span> argument sets listener to display value of Media Queries on browser's
+              <span class="code">resize</span> or device's <span class="code">orientation</span> change events.
+              <i>Browser only API.</i>
+            </p>
+            <pre class="code cm-s-default"><textarea class="rawcode">console.re.media(['watch']);</textarea></pre>
+
+            <p>
+              Displays all types of Media Queries for current <span class="code">Window</span> size included
+              <span class="code">screen</span> and <span class="code">print</span>. <i>Browser only API.</i>
+            </p>
+            <pre class="code cm-s-default"><textarea class="rawcode">console.re.media(['all']);</textarea></pre>
+
+            <h5 id="consoleretime">console.re.time()</h5>
+            <p>
+              Creates a new timer under the given <span class="code">label</span>. To stop timer and display time
+              result, call <span class="code">console.re.timeEnd(label);</span> with the same
+              <span class="code">label</span>.
+            </p>
+            <pre class="code cm-s-default"><textarea class="rawcode">console.re.time(label);</textarea></pre>
+
+            <h5 id="consoleretimeend">console.re.timeEnd()</h5>
+            <p>Stops timer and displays time result started before with given <span class="code">label</span>.</p>
+            <pre class="code cm-s-default"><textarea class="rawcode">console.re.timeEnd(label);</textarea></pre>
+
+            <h5 id="consolerecount">console.re.count()</h5>
+            <p>Displays the number of times count call with given <span class="code">label</span> was executed.</p>
+            <pre class="code cm-s-default"><textarea class="rawcode">console.re.count(label);</textarea></pre>
+
+            <h5 id="consoleretest">console.re.test()</h5>
+            <p>
+              Displays result of test for given <span class="code">expression</span>, <span class="code">object</span>,
+              <span class="code">string</span>, <span class="code">array</span>, <span class="code">number</span>.
+            </p>
+            <pre
+              class="code cm-s-default"
+            ><textarea class="rawcode">console.re.test('expression|string|array|object|number'[,object, ...]);</textarea></pre>
+
+            <h5 id="consolereassert">console.re.assert()</h5>
+            <p>
+              Tests if a given expression is <span class="code">true</span>. Only if <span class="code">false</span>, it
+              will display an error message.
+            </p>
+            <pre
+              class="code cm-s-default"
+            ><textarea class="rawcode">console.re.assert(expression[, object, ...],[message]);</textarea></pre>
+
+            <h5 id="consoleretrace">console.re.trace()</h5>
+            <p>Displays stack trace of JavaScript execution at the point where it was called.</p>
+            <pre class="code cm-s-default"><textarea class="rawcode">console.re.trace();</textarea></pre>
+
+            <h5 id="consolereclear">console.re.clear()</h5>
+            <p>Clears remote console logs.</p>
+            <pre class="code cm-s-default"><textarea class="rawcode">console.re.clear();</textarea></pre>
+          </section>
+        </article>
+        <div class="post-after"></div>
+      </div>
+
+      <div class="post-holder">
+        <article class="post">
+          <header class="post-header">
+            <h2 class="post-title"><span>Usage&nbsp;</span>Examples</h2>
+          </header>
+          <section class="post-content">
+            <p>Remote logging String or Number value with interpolation.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+const str = 'Test';
+const num = 43;
+
+console.re.log('This is a string %s and number %d', str, num);
+
+// Remote Logger Output
+[LOG] This is a string 'Test' and number 43
+            </textarea></pre>
+            <p class="tryit">
+              <a href="https://runjs.co/s/kL$aRdxB3" target="_new">Run on RunJS</a> or
+              <a href="http://jsfiddle.net/32bFp/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>Remote logging {Object} and its content.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+const obj = { key1: 1, key2: 2, key3: 3 };
+
+console.re.log('This is an %s', obj);
+
+// Remote Logger Output
+[LOG] This is an {Object}
+// clicking on {Object} opens its content
+{
+    "key1": 1,
+    "key2": 2,
+    "key3": 3
+}            </textarea></pre>
+            <p class="tryit">
+              <a href="https://runjs.co/s/XdTA7eS0k" target="_new">Run on RunJS</a> or
+              <a href="http://jsfiddle.net/xeZx2/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>Remote logging [Array] and its content.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+const arr = ['element1', 'element2', 'element3'];
+
+console.re.log('This is an %s', arr);
+
+// Remote Logger Output
+[LOG] This is an [Array]
+// clicking on [Array] opens its content
+[
+    "element1",
+    "element2",
+    "element3"
+]            </textarea></pre>
+            <p class="tryit">
+              <a href="https://runjs.co/s/2RdNL7IGx" target="_new">Run on RunJS</a> or
+              <a href="http://jsfiddle.net/Mw3RL/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>Remote console has full ES6 support of next JavaScript.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+// One line arrow function
+const multiply = (x, y) => x * y;
+
+console.log(multiply(10, 3));
+
+// No Parameters, parentheses are required when no parameters are present.
+const sayHello = () => {
+  console.log('hello world');
+};
+sayHello();
+
+// Immediately invoked arrow function expression
+(() => console.log('hi'))();
+
+            </textarea></pre>
+            <p class="tryit"><a href="https://runjs.co/s/E38UVd7R$" target="_new">Run on RunJS</a></p>
+
+            <p>Remote logging DOM elements and its HTML content with JavaScript or jQuery selectors.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+console.re.log('This is an %s', document.body, 'Paragraphs %s:', $('p'));
+
+// Remote Logger Output
+[LOG] This is an <BODY Element>,Paragraphs [Array Elements]
+// clicking on <BODY Element> opens its HTML content</textarea></pre>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode html">
+<body>
+ <div class="test">
+  <p class="t4">test 4</p>
+ </div>
+ ...
+ <div class="test-two">
+  <p class="t8">test-two 4</p>
+ </div>
+</body> </textarea></pre>
+            <p class="tryit">
+              <a href="/try#example4" target="_new">Try on here</a> or
+              <a href="http://jsfiddle.net/FXRFF/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>Remote logging test results for given expression.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+console.re.test(1!==1);
+
+console.re.test("'this string'");
+
+console.re.test([1,2,3,4,5,6]);
+
+console.re.test(document.body);
+
+// Remote Logger Output
+[TEST] 1!==1 is false
+[TEST] 'this string' is "String"
+[TEST] 1,2,3,4,5,6 is [Array]
+[TEST] document.body is <object HTMLBodyElement>‌</textarea></pre>
+            <p class="tryit">
+              <a href="https://runjs.co/s/4tedkZbUC" target="_new">Run on RunJS</a> or
+              <a href="http://jsfiddle.net/LLaaT/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>Remote logging message if a given expression is not true.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+console.re.assert(1!==1, 'It is not true');
+
+// Remote Logger Output
+[ASSERT] It is not true</textarea></pre>
+            <p class="tryit">
+              <a href="https://runjs.co/s/1XqZi16Sy" target="_new">Run on RunJS</a> or
+              <a href="http://jsfiddle.net/9MQWf/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>Remote logging time passed between timer start and end calls with the same label.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+console.re.time('1000000-loops');
+console.re.timeEnd('1000000-loops');
+
+// Remote Logger Output
+[TIME] 1000000-loops,started‌
+[TIME] 1000000-loops,ends in 31 ms‌</textarea></pre>
+            <p class="tryit">
+              <a href="https://runjs.co/s/0gu0won3T" target="_new">Run on RunJS</a> or
+              <a href="http://jsfiddle.net/G44uN/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>Remote logging number of times counter called with the same label.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+for (let i = 0; i < 10; i++) {
+  console.re.count('loop number:%d');
+}
+
+// Remote Logger Output
+[COUNT] loop number:1‌
+[COUNT] loop number:2‌
+[COUNT] loop number:3‌
+...
+[COUNT] loop number:10</textarea></pre>
+            <p class="tryit">
+              <a href="https://runjs.co/s/72jouWH5u" target="_new">Run on RunJS</a> or
+              <a href="http://jsfiddle.net/C9Jzq/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>Remote logging size in pixels of DOM elements or Window.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+// get Window size
+console.re.size();
+// get size of document.body
+console.re.size(document.body); 
+
+// Remote Logger Output
+[SIZE] Window Size: 1274px by 683px‌
+[SIZE] <BODY> auto by auto
+            <p class="tryit">
+              <a href="https://runjs.co/s/0zSJ@DgDD" target="_new">Run on RunJS</a> or
+              <a href="/try#example9">Try it here</a> or <a href="http://jsfiddle.net/2v5z4/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>Remote logging CSS properties for specified DOM elements.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+// get value of CSS property 'background-color' of <body>
+console.re.css(document.body, 'background-color');
+// get value of CSS properties 'border' and 'color' for all P elements
+console.re.css('P elements %s', document.getElementsByTagName('p'), ['border','color']);
+// get value of CSS property 'margin' and 'padding' using jQuery
+console.re.css('DIV.test %s', $('div.test'), ['margin','padding']); 
+
+// Remote Logger Output
+[CSS] <BODY> background-color:rgb(255, 255, 255);
+[CSS] P elements [Array]
+[CSS] DIV.test [Array]
+// clicking on [Array] opens value of CSS properties
+[
+    {
+        "margin": "20px",
+        "padding": "10px"
+    }
+]</textarea></pre>
+            <i class="note">Note: using jQuery selectors requires jQuery library to be included in your project.</i>
+            <p class="tryit">
+              <a href="https://runjs.co/s/C6i88bSgt">Run on RunJS</a> or <a href="/try#example10">Try it here</a> or
+              <a href="http://jsfiddle.net/j9KqF/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>Remote logging Media Query rules used for current Window size.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+// get applied Media Query rulers for current Window size
+console.re.media();
+// get all types of Media Query applied, including print and screen 
+console.re.media('all');
+// get applied Media Query rulers and send updates on Window resize or device orientation change
+console.re.media('watch');
+
+// Remote Logger Output for each line
+[MEDIA] screen and (max-width: 1080px) and (min-width: 320px)‌</textarea></pre>
+            <p class="tryit">
+              <a href="/try#example11">Try it here</a> or
+              <a href="http://jsfiddle.net/2yS7V/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>Remote logging JavaScript Stack Trace information.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+// Remote logging JavaScript Stack Trace information
+(function test(){
+  console.re.trace('Stack Trace');
+})();
+
+// Remote Logger Output
+[TRACE] Stack Trace, [Array]
+// clicking on [Array] opens current line stack trace information
+[    ...
+    "test@http://fiddle.jshell.net/_display/:90:13",
+    "HTMLIFrameElement.fload@http://fiddle.jshell.net/_display/:91:3"
+]</textarea></pre>
+            <p class="tryit">
+              <a href="https://runjs.co/s/O3vVQ8TkX" target="_new">Run on RunJS</a> or
+              <a href="http://jsfiddle.net/GZGS5/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>Using <b>[BBcodes]</b> you can send message to remote logger in styles, colors and size:</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+console.re.error('output [i]any[/i] [size=15]errors[/size] using [red]Error log level[/red]');</textarea></pre>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+console.re.info('output anything in colors: [red]%s[/red] [green]%s[/green] [blue]%s[/blue] [yellow]%s[/yellow] [orange]%s[/orange] [lime]%s[/lime] [white]%s[/white] [black]%s[/black]', 'red', 'green', 'blue', 'yellow',  'orange', 'lime', 'white', 'black');</textarea></pre>
+            <p class="tryit">
+              <a href="https://runjs.co/s/O8zDPuPd4" target="_new">Run on RunJS</a> or
+              <a href="http://jsfiddle.net/7Sy5S/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>List of available <b>[BBcodes]</b>:</p>
+            <ul class="bbcodes">
+              <span>styles:</span>
+              <li class="bbcode">
+                <span class="code dark">[b]<b>bold</b>[/b]</span> <span class="code dark">[i]<i>italic</i>[/i]</span>
+                <span class="code dark">[u]<u>underline</u>[/u]</span>
+                <span class="code dark">[s]<s>strike-through</s>[/s]</span>
+                <span class="code dark">[size=X]1-<span style="font-size: 180%">20</span>[/size]</span>
+              </li>
+              <span>colors:</span>
+              <li class="bbcode">
+                <span class="code dark">[<span style="color: #f00">red</span>]</span>
+                <span class="code dark">[<span style="color: #008000">green</span>]</span>
+                <span class="code dark">[<span style="color: #09f">blue</span>]</span>
+                <span class="code dark">[<span style="color: #d1d824">yellow</span>]</span>
+                <span class="code dark">[<span style="color: #ffa500">orange</span>]</span>
+                <span class="code dark">[<span style="color: #0f0">lime</span>]</span>
+                <span class="code dark">[<span style="color: #fff">white</span>]</span>
+                <span class="code dark">[<span style="color: #000">black</span>]</span>
+              </li>
+            </ul>
+
+            <p>Clearing remote logger console before sending a new messages.</p>
+            <pre class="code cm-s-default nowrap"><textarea class="rawcode">
+console.re.clear();
+
+console.re.info('first info message');
+
+console.re.log('second log message');
+
+// Remote Logger Output
+[INFO] 'first info message'
+[LOG] 'second log message'</textarea></pre>
+            <p class="tryit">
+              <a href="https://runjs.co/s/ZT29zLBgr" target="_new">Run on RunJS</a> or
+              <a href="http://jsfiddle.net/DJcX5/" target="_new">jsFiddle</a>
+            </p>
+
+            <p>Run more JavaScript examples on <a href="http://runjs.co">RunJS.co</a></p>
+          </section>
+        </article>
+        <div class="post-after"></div>
+      </div>
+
+      <div class="post-holder">
+        <article class="post">
+          <header class="post-header">
+            <h2 class="post-title">Private Servers</h2>
+          </header>
+          <section class="post-content">
+            <p>
+              You can download and install your own console remote private server
+              <a href="https://github.com/kurdin/console-remote-server"
+                >https://github.com/kurdin/console-remote-server</a
+              >
+              for <b>FREE</b>.
+            </p>
+            <p>
+              Just install server and use standard connector
+              <a href="https://github.com/kurdin/console-remote">https://github.com/kurdin/console-remote</a> to
+              connector with your private server
+            </p>
+            <p>All information sent to the private server will be more secured and no one can see it.</p>
+          </section>
+        </article>
+        <div class="post-after prelast"></div>
+      </div>
+
+      <div class="post-holder" id="contact">
+        <article class="post last">
+          <header class="post-header">
+            <h2 class="post-title">CONTACT<span>&nbsp;US</span></h2>
+          </header>
+          <section class="post-content">
+            <p>Feel free to contact us with any questions, feedback, bug reporting</p>
+            <p>
+              <b>Remote Console Connector</b>
+              <a href="https://github.com/kurdin/console-remote">https://github.com/kurdin/console-remote</a>
+            </p>
+            <p>
+              <b>Remote Console Server</b>
+              <a href="https://github.com/kurdin/console-remote-server"
+                >https://github.com/kurdin/console-remote-server</a
+              >
+            </p>
+            <p><b>Contact at Console.Re</b> <a href="https://console.re#contact">https://console.re#contact</a></p>
+          </section>
+        </article>
+        <div class="post-after"></div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <section class="poweredby">
+        ©
+        <script>
+          var td = new Date();
+          document.write(td.getFullYear() + ' ');
+        </script>
+        Private Server for Remote JavaScript Console Developed by
+        <a href="https://github.com/kurdin" target="_new">Sergey Kurdin</a>
+      </section>
+    </footer>
+
+    <script></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="/www/js/vendors-bundle.js"></script>
+    <script src="/www/js/index-bundle.js"></script>
+  </body>
+</html>

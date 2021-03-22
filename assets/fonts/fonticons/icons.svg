@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2013 by original authors @ fontello.com</metadata>
+<defs>
+<font id="myicons" horiz-adv-x="1000" >
+<font-face font-family="myicons" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="left-circled" unicode="&#xe802;" d="m714 314v72q0 14-10 25t-25 10h-281l106 106q11 11 11 25t-11 25l-51 51q-10 10-25 10t-25-10l-202-202l-51-51q-10-10-10-25t10-25l51-51l202-202q10-10 25-10t25 10l51 51q10 10 10 25t-10 25l-106 106h281q14 0 25 10t10 25z m143 36q0-117-57-215t-156-156t-215-58t-216 58t-155 156t-58 215t58 215t155 156t216 58t215-58t156-156t57-215z" horiz-adv-x="857.1" />
+<glyph glyph-name="left-open-1" unicode="&#xe801;" d="m242 626q14 16 39 16t41-16q38-36 0-80l-186-196l186-194q38-44 0-80q-16-16-40-16t-40 16l-226 236q-16 16-16 38q0 24 16 40q206 214 226 236z" horiz-adv-x="341" />
+<glyph glyph-name="left-open" unicode="&#xe800;" d="m481 684q32-31 32-74t-32-74l-186-186l186-186q32-31 32-74t-32-74t-73-31t-74 31l-334 334l334 334q30 31 74 31t73-31z" horiz-adv-x="513" />
+</font>
+</defs>
+</svg>

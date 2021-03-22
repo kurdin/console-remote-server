@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html class="no_touch">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 user-scalable=no" />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <title>Console.Re</title>
+
+    <link rel="shortcut icon" href="assets/img/favicon.png" />
+    <link href="app/css/consoleapp.css" rel="stylesheet" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.min.js"></script>
+    <script src="app/js/app-js-vendors.js"></script>
+    <script type="text/javascript">
+      var iframeElement = window.frameElement;
+
+      var channelName =
+        (iframeElement && iframeElement.getAttribute('channel')) ||
+        (window.location.search.indexOf('channel=') !== -1 && window.location.search.substr(1).split('=')[1]) ||
+        decodeURIComponent(window.location.pathname.replace(/^\/|\/$/g, '')).replace(/\b +\b/g, '-');
+
+      var consoleRe = {
+        minfy: '{{env}}',
+        minUI: false,
+        reverseOutput: false,
+        channel: channelName,
+        hostname: window.location.hostname,
+        host: window.location.host,
+        port: window.location.port || '80',
+        prot: window.location.protocol || 'http:',
+        version: '{{consoleVersion}}',
+      };
+    </script>
+  </head>
+
+  <body id="consolere">
+    <div class="cheaderwrap">
+      <div class="ripple">
+        <div class="cmdbuttons">
+          <button id="clear-log" class="btn gray" title="Clear Console Logs">
+            <span class="autoClear hide430" title="ON/OFF AUTO CLEAR">[A]</span> C<b>lear</b>
+          </button>
+          <button id="mark-log" class="btn gray" title="Insert Marked Separator">
+            <span class="autoMark hide430" title="ON/OFF AUTO MARK">[A]</span> M<b>ark</b>
+          </button>
+          <button id="test-connection" class="btn gray" title="Test Server Connection">P<b>ing</b></button>
+        </div>
+        <h3 id="cheader"></h3>
+      </div>
+    </div>
+    <div id="clogs"></div>
+    <div id="cend"></div>
+
+    <!-- START SETTINGS -->
+    <div id="style-switcher" unselectable="on">
+      <div class="switcher-handle hints hint--left" data-hints="Open Settings"><span>&#094;</span></div>
+      <button class="mfp-close" type="button">&#206;</button>
+      <div class="pformat ssector" unselectable="on">
+        <p>Output Position</p>
+        <a href="#" class="cup">&#0041;</a>
+        <a href="#" class="cswap" title="Swap Output">&#0034;</a>
+        <a href="#" class="cdown">&#0042;</a>
+      </div>
+      <div class="msector">
+        <div class="fface ssector" unselectable="on" data-setting="fontface">
+          <p>Font Style <span class="val">4</span></p>
+          <a href="#" class="increase">&#194;</a>
+          <a href="#" class="decrease">&#197;</a>
+          <a href="#" class="reset" title="Reset">&#0085;</a>
+        </div>
+        <div class="fsize ssector" unselectable="on" data-setting="fontsize">
+          <p>Font Size <span class="val">100%</span></p>
+          <a href="#" class="increase">&#194;</a>
+          <a href="#" class="decrease">&#197;</a>
+          <a href="#" class="reset" title="Reset">&#0085;</a>
+        </div>
+      </div>
+      <div class="msector mformat">
+        <div class="hsector">Log Format:</div>
+        <div class="fformatn ssector" unselectable="on" data-setting="time_view">
+          <p>Number/Time <span class="val">4</span></p>
+          <a href="#" class="increase">&#194;</a>
+          <a href="#" class="decrease">&#197;</a>
+          <a href="#" class="shide" title="Hide/Show">&#0088;</a>
+        </div>
+        <div class="fformatbr ssector" unselectable="on" data-setting="browser_view">
+          <p>Browser/OS <span class="val">4</span></p>
+          <a href="#" class="increase">&#194;</a>
+          <a href="#" class="decrease">&#197;</a>
+          <a href="#" class="shide" title="Hide/Show">&#0088;</a>
+        </div>
+      </div>
+      <div class="msector mformat">
+        <div class="fformatcl ssector" unselectable="on" data-setting="location_view">
+          <p>Caller/Line <span class="val">3</span></p>
+          <a href="#" class="increase">&#194;</a>
+          <a href="#" class="decrease">&#197;</a>
+          <a href="#" class="shide" title="Hide/Show">&#0088;</a>
+        </div>
+        <div class="fformatlb ssector" unselectable="on" data-setting="display_view">
+          <p>Level/Label <span class="val">2</span></p>
+          <a href="#" class="increase">&#194;</a>
+          <a href="#" class="decrease">&#197;</a>
+          <a href="#" class="shide" title="Hide/Show">&#0088;</a>
+        </div>
+      </div>
+      <div class="msector mformat">
+        <div class="fformatao ssector" unselectable="on" data-setting="auto_objects">
+          <p class="hints hint--left" data-hints="Auto Open Object Blocks By Keys Length">
+            A/O Objects <span class="val">5</span>
+          </p>
+          <a href="#" class="increase">&#194;</a>
+          <a href="#" class="decrease">&#197;</a>
+          <a href="#" class="shide" title="Hide/Show">&#0088;</a>
+        </div>
+        <div class="fformataa ssector" unselectable="on" data-setting="auto_arrays">
+          <p class="hints hint--left" data-hints="Auto Open Array Blocks By Items Length">
+            A/O Arrays <span class="val">5</span>
+          </p>
+          <a href="#" class="increase">&#194;</a>
+          <a href="#" class="decrease">&#197;</a>
+          <a href="#" class="shide" title="Hide/Show">&#0088;</a>
+        </div>
+      </div>
+      <div class="msector">
+        <button class="btn gray resetall">Reset All</button>
+      </div>
+    </div>
+    <!--  END OF SETTINGS-->
+    <script src="app/js/app-js-last-vendors.js"></script>
+
+    <div id="dialog-use" class="zoom-d mfp-hide">
+      <h1>How to use Console API</h1>
+      <h2>
+        <a href="#dialog-connect" class="popup-zoom">Connect</a>, then use Console API from JavaScript to output here:
+      </h2>
+      <p class="footer-tabs">
+        <a href="#" data-href="tab1" class="active">console.re.log()</a>
+        <a href="#" data-href="tab2">console.re.info()</a>
+        <a href="#" data-href="tab3">console.re.warn()</a>
+
+        <a href="#" data-href="tab4">console.re.debug()</a>
+        <a href="#" data-href="tab5">console.re.error()</a>
+        <a href="#" data-href="tab6">console.re.trace()</a>
+
+        <a href="#" data-href="tab7">console.re.count()</a>
+        <a href="#" data-href="tab8">console.re.time()</a>
+        <a href="#" data-href="tab9">console.re.timeEnd()</a>
+
+        <a href="#" data-href="tab10">console.re.size()</a>
+        <a href="#" data-href="tab11">console.re.css()</a>
+        <a href="#" data-href="tab12">console.re.media()</a>
+
+        <a href="#" data-href="tab13">console.re.test()</a>
+        <a href="#" data-href="tab14">console.re.assert()</a>
+        <a href="#" data-href="tab15">console.re.clear()</a>
+      </p>
+      <div class="tab-content">
+        <div class="tab1 level-log">
+          <pre class="html"><code>
+         <span class="attribute">console.re.log</span><span class="tag">(</span><span class="value">'message'|obj|arr|bool|elem|'%s',str|'%d',num</span><span class="tag">)</span>;
+         </code>
+         </pre>
+          <p class="discr">
+            Sends <span class="level">[LOG]</span>level message to the remote console.
+            <a href="#" class="usage">Usage example.</a>
+          </p>
+          <pre class="examples"><code>
+         <div><span class="attribute">var</span> str <span class="tag">=</span> <span class="value">'Test'</span>, num <span class="tag">=</span> <span class="value">43</span><span class="tag">;</span></div>
+         <span class="attribute">console.re.log</span><span class="tag">(</span><span class="value">'This is a string %s and number %d'</span><span class="tag">,</span> str<span class="tag">,</span> num<span class="tag">)</span>;
+         </code>
+         </pre>
+        </div>
+        <div class="tab2 level-info">
+          <pre class="html"><code>
+         <span class="attribute">console.re.info</span><span class="tag">(</span><span class="value">'message'|obj|arr|bool|elem|'%s',str|'%d',num</span><span class="tag">)</span>;
+         </code>
+         </pre>
+          <p class="discr">
+            Sends <span class="level">[INFO]</span>level message to the remote console.
+            <a href="#" class="usage">Usage example.</a>
+          </p>
+          <pre class="examples"><code>
+         <div><span class="attribute">var</span> obj <span class="tag">= {</span><span class="key">key1</span>:<span class="value">1</span>,<span class="key">key2</span>:<span class="value">2</span>,<span class="key">key3</span>:<span class="value">3</span><span class="tag">}</span>, arr <span class="tag">= [</span><span class="value">1</span>,<span class="value">2</span>,<span class="value">3</span><span class="tag">];</span></div>
+         <span class="attribute">console.re.log</span><span class="tag">(</span><span class="value">'This is an object %s and array %s'</span><span class="tag">,</span> obj<span class="tag">,</span> arr<span class="tag">)</span>;
+         </code>
+         </pre>
+        </div>
+
+        <div class="tab3">
+          <pre class="html"><code>
+     <span class="attribute">console.re.warn</span><span class="tag">(</span><span class="value">'message'</span><span class="tag">)</span>;
+     </code></pre>
+          <p class="discr">
+            Sends <span class="level-warn"><span class="level">[WARN]</span></span
+            >level message to the remote console. Same usage and accept the same arguments as
+            <span class="level-log"><span class="level">[LOG]</span></span
+            >or <span class="level-info"><span class="level">[INFO]</span></span
+            >level.
+          </p>
+        </div>
+
+        <div class="tab4">
+          <pre class="html"><code>
+     <span class="attribute">console.re.debug</span><span class="tag">(</span><span class="value">'message'</span><span class="tag">)</span>;
+     </code></pre>
+          <p class="discr">
+            Sends <span class="level-debug"><span class="level">[DEBUG]</span></span
+            >level message to the remote console. Same usage and accept the same arguments as
+            <span class="level-log"><span class="level">[LOG]</span></span
+            >or <span class="level-info"><span class="level">[INFO]</span></span
+            >level.
+          </p>
+        </div>
+
+        <div class="tab5">
+          <pre class="html"><code>
+     <span class="attribute">console.re.error</span><span class="tag">(</span><span class="value">'message'</span><span class="tag">)</span>;
+     </code></pre>
+          <p class="discr">
+            Sends <span class="level-error"><span class="level">[ERROR]</span></span
+            >level message to the remote console. Same usage and accept the same arguments as
+            <span class="level-log"><span class="level">[LOG]</span></span
+            >or <span class="level-info"><span class="level">[INFO]</span></span
+            >level.
+          </p>
+        </div>
+
+        <div class="tab6">
+          <pre class="html"><code>
+     <span class="attribute">console.re.trace</span><span class="tag">(</span><span class="tag">)</span>;
+     </code></pre>
+          <p class="discr">Displays stack trace of JavaScript execution at the point where it was called.</p>
+        </div>
+
+        <div class="tab7">
+          <pre class="html"><code>
+     <span class="attribute">console.re.count</span><span class="tag">(</span><span class="value">'label'</span><span class="tag">)</span>;
+     </code></pre>
+          <p class="discr">
+            Displays the number of times count call with given <span class="value">'label'</span> was executed.
+          </p>
+        </div>
+
+        <div class="tab8">
+          <pre class="html"><code>
+     <span class="attribute">console.re.time</span><span class="tag">(</span><span class="value">'label'</span><span class="tag">)</span>;
+     </code></pre>
+          <p class="discr">
+            Creates a new timer under the given <span class="value">'label'</span>. To stop timer and display time
+            result, call <span class="attribute">console.re.timeEnd</span><span class="tag">(</span
+            ><span class="value">'label'</span><span class="tag">)</span>;
+          </p>
+        </div>
+
+        <div class="tab9">
+          <pre class="html"><code>
+     <span class="attribute">console.re.timeEnd</span><span class="tag">(</span><span class="value">'label'</span><span class="tag">)</span>;
+     </code></pre>
+          <p class="discr">
+            Stops timer and displays time result started before with given <span class="value">'label'</span>.
+          </p>
+        </div>
+
+        <div class="tab10">
+          <pre class="html"><code>
+     <span class="attribute">console.re.size</span><span class="tag">(</span>[<span class="value">selector</span>],[,<span class="value">selector</span>,...]<span class="tag">)</span>;
+     </code></pre>
+          <p class="discr">
+            Displays size of DOM element(s), <span class="attribute">width</span> and
+            <span class="attribute">height</span> for given <span class="value">selector</span>(s) or displays current
+            <span class="attribute">Window size</span> if called with no arguments. <i>Browser only API</i>.
+            <a href="#" class="usage">Usage example.</a>
+          </p>
+          <pre class="examples"><code>
+        <div class="comment">// get Window size</div>
+        <span class="attribute">console.re.size</span><span class="tag">()</span>;
+        <div class="comment">// get size of all P elements</div>
+        <span class="attribute">console.re.size</span><span class="tag">(</span><span class="value">'all P %s'</span>, <span class="value">document.getElementsByTagName('p')</span><span class="tag">)</span>;
+        <div class="comment">// get size of DIV elements with class 'test' using jQuery</div>
+        <span class="attribute">console.re.size</span><span class="tag">(</span>$(<span class="value">'div.test'</span>)[0]<span class="tag">)</span>;
+     </code>
+     </pre>
+        </div>
+
+        <div class="tab11">
+          <pre class="html"><code>
+     <span class="attribute">console.re.css</span><span class="tag">(</span><span class="value">selector</span>,[<span class="value">'property'</span>,<span class="value">'property2'</span>, ...<span class="value">'propertyN'</span>]<span class="tag">)</span>;
+     </code></pre>
+          <p class="discr">
+            Displays value of specified <span class="attribute">CSS properties</span> in array for given
+            <span class="value">selector</span>(s). <i>Browser only API</i>.
+            <a href="#" class="usage">Usage example.</a>
+          </p>
+          <pre class="examples"><code>
+        <div class="comment">// get CSS property 'background-color' of BODY</div>
+        <span class="attribute">console.re.css</span><span class="tag">(<span class="value">document.body</span>, <span class="value">'background-color'</span>)</span>;
+        <div class="comment">// get CSS properties 'border' and 'color' for all P elements</div>
+        <span class="attribute">console.re.css</span><span class="tag">(</span><span class="value">document.getElementsByTagName('p')</span>, [<span class="value">'border'</span>,<span class="value">'color'</span>]<span class="tag">)</span>;
+        <div class="comment">// get CSS property 'margin' and 'padding' using jQuery</div>
+        <span class="attribute">console.re.css</span><span class="tag">(</span>$(<span class="value">'div.test'</span>), [<span class="value">'margin'</span>,<span class="value">'padding'</span>]<span class="tag">)</span>;
+     </code>
+     </pre>
+        </div>
+        <div class="tab12">
+          <pre class="html"><code>
+     <span class="attribute">console.re.media</span><span class="tag">()</span>;
+     </code></pre>
+          <p class="discr">
+            Displays value of <span class="attribute">CSS Media Queries</span> for current
+            <span class="attribute">Window size</span>. An optional <span class="value">'watch'</span> argument sets
+            listener to display Media Queries on browser's resize events. <i>Browser only API</i>.
+            <a href="#" class="usage">Usage example.</a>
+          </p>
+          <pre class="examples"><code>
+        <div class="comment">// get applied Media Query rulers for current Window size</div>
+        <span class="attribute">console.re.media</span><span class="tag">()</span>;
+        <div class="comment">// get Media Query and send updates on Window resize</div>
+        <span class="attribute">console.re.media</span><span class="tag">(</span><span class="value">'watch'</span><span class="tag">)</span>;
+        <div class="comment">// get all types of Media Query applied (print and screen)</div>
+        <span class="attribute">console.re.media</span><span class="tag">(</span><span class="value">'all'</span><span class="tag">)</span>;
+     </code>
+     </pre>
+        </div>
+
+        <div class="tab13">
+          <pre class="html"><code>
+     <span class="attribute">console.re.test</span><span class="tag">(</span><span class="value">'expression|selector|string|array|object|number'</span><span class="tag">)</span>;
+     </code></pre>
+          <p class="discr">
+            Displays result of test for given <span class="value">expression</span> or valid
+            <span class="value">selector, object, string, array, number</span>.
+            <a href="#" class="usage">Usage example.</a>
+          </p>
+          <pre class="examples"><code>
+        <span class="attribute">console.re.test</span><span class="tag">(<span class="value">"1!==1","'this string'","[1,2,3,4,5,6]","document.body"</span>)</span>;
+     </code>
+     </pre>
+        </div>
+
+        <div class="tab14">
+          <pre class="html"><code>
+     <span class="attribute">console.re.assert</span><span class="tag">(</span><span class="value">expression</span>,[<span class="value">'message'</span>]<span class="tag">)</span>;
+     </code></pre>
+          <p class="discr">
+            Tests if a given <span class="value">expression</span> is TRUE. Only if FALSE, it will display an error
+            message.
+            <a href="#" class="usage">Usage example.</a>
+          </p>
+          <pre class="examples"><code>
+        <span class="attribute">console.re.assert</span><span class="tag">(</span>1!==1, <span class="value">'It is not true'</span><span class="tag">)</span>;
+     </code>
+     </pre>
+        </div>
+
+        <div class="tab15">
+          <pre class="html"><code>
+     <span class="attribute">console.re.clear</span><span class="tag">()</span>;
+     </code></pre>
+          <p class="discr">Clears remote console logs.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="dialog-feedback" class="zoom-d mfp-hide">
+      <h1>Send Feedback / Bug Reporting</h1>
+      <p class="footer-tabs">
+        <a href="#" data-href="tab1" class="active">Feedback</a>
+        <a href="#" data-href="tab2">Bug Reporting</a>
+      </p>
+
+      <div class="tab-content">
+        <div class="tab1">
+          <form action="/api/feedback" method="post" id="contactfeedback">
+            <input type="hidden" name="formid" value="contactfeedback" />
+            <input type="hidden" name="topic" value="Feedback" />
+            <div class="span4">
+              <label
+                ><span>Name</span><input type="text" name="name" value="" class="span4 name" maxlength="120"
+              /></label>
+            </div>
+            <span class="lastname">
+              <label><span>Last Name</span><input type="text" name="lastname" value="" maxlength="120" /></label>
+            </span>
+            <div class="span4">
+              <label
+                ><span>Email</span><input type="text" name="email" value="" class="span4 email" maxlength="120"
+              /></label>
+            </div>
+            <div class="span4">
+              <label
+                ><span>Feedback Type</span
+                ><span class="select"
+                  ><select name="type" class="feedback-type">
+                    <option value="0">please select</option>
+                    <option>General Opinion</option>
+                    <option>User Interface/Usability</option>
+                    <option>Enhancement Request</option>
+                    <option>Integration Partnership</option>
+                    <option>Other</option>
+                  </select>
+                </span>
+              </label>
+            </div>
+            <div class="span8">
+              <label>
+                <textarea
+                  rows="6"
+                  name="message"
+                  class="span8"
+                  maxlength="500"
+                  placeholder="enter feedback message"
+                ></textarea>
+              </label>
+            </div>
+            <div class="span8 clearfix">
+              <div class="message">
+                <div class="returntarget"></div>
+              </div>
+              <button type="submit" class="btn gray">Send Feedback</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="tab2">
+          <form action="/api/feedback" method="post" id="contactbugs">
+            <input type="hidden" name="formid" value="contactbugs" />
+            <input type="hidden" name="topic" value="Bug Report" />
+            <div class="span4">
+              <label
+                ><span>Name</span><input type="text" name="name" value="" class="span4 name" maxlength="120"
+              /></label>
+            </div>
+            <span class="lastname">
+              <label><span>Last Name</span><input type="text" name="lastname" value="" maxlength="120" /></label>
+            </span>
+            <div class="span4">
+              <label
+                ><span>Email</span><input type="text" name="email" value="" class="span4 email" maxlength="120"
+              /></label>
+            </div>
+            <div class="span4">
+              <label
+                ><span>Bug Type</span
+                ><span class="select"
+                  ><select name="type" class="feedback-type">
+                    <option value="0">please select</option>
+                    <option>User Interface/Usability</option>
+                    <option>Browser Compatibility</option>
+                    <option>Console API</option>
+                    <option>Logger Error</option>
+                    <option>Connector (Client) Error</option>
+                    <option>Inconsistent Behavior</option>
+                    <option>Other problem</option>
+                  </select>
+                </span>
+              </label>
+            </div>
+            <div class="span8">
+              <label>
+                <textarea
+                  rows="6"
+                  name="message"
+                  class="span8"
+                  maxlength="500"
+                  placeholder="describe a bug or a problem"
+                ></textarea>
+              </label>
+            </div>
+            <div class="span8 clearfix">
+              <div class="message">
+                <div class="returntarget"></div>
+              </div>
+              <button type="submit" class="btn gray">Send Report</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="dialog-follow" class="zoom-d mfp-hide clearfix">
+      <h1>Follow US</h1>
+
+      <div class="tab-content">
+        <p class="follow">
+          <a href="https://www.facebook.com/console.re" target="_new"> <span class="icons">&#228;</span>FACEBOOK</a>
+        </p>
+        <p class="follow">
+          <a href="https://github.com/kurdin/console-remote" target="_new"><span class="icons">&#0082;</span>GITHUB</a>
+        </p>
+      </div>
+    </div>
+
+    <div id="dialog-channel" class="zoom-d mfp-hide clearfix">
+      <h1>Channel Settings</h1>
+      <p class="footer-tabs">
+        <a href="#" data-href="tab1" class="active">Channel Name</a>
+        <a href="#" data-href="tab2" class="shorturl">Short Url and QR Code</a>
+      </p>
+      <div class="tab-content">
+        <div class="tab1">
+          <div class="chprefix">
+            <span></span><input value="" type="text" class="channel" spellcheck="false" /><button
+              class="btn gray go"
+              type="button"
+            >
+              go
+            </button>
+            <p class="chprand"><a href="">Generate random channel name</a></p>
+          </div>
+          <p class="chpmessage">Going to channel [<b></b>] please wait.</p>
+        </div>
+        <div class="tab2">
+          <div class="urlcode-place">
+            <p id="qrcode"></p>
+            <p class="incode"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="dialog-about" class="zoom-d mfp-hide">
+      <h1>About Console.Re</h1>
+      <div class="tab-content">
+        <h2>Remote JavaScript Console Public Server</h2>
+        <div class="logo"><img src="assets/img/console.re.logo.png" width="90" height="76" /></div>
+        <p class="info">Console.Re version: {{consoleVersion}}</p>
+        <p class="info-links">
+          <a href="#dialog-connect" class="popup-zoom">How to Connect</a> |
+          <a href="#dialog-use" class="popup-zoom">Console API</a> |
+          <a href="#dialog-channel" class="popup-zoom changechannel">Channel Settings</a>
+        </p>
+      </div>
+    </div>
+
+    <div id="dialog-connect" class="zoom-d mfp-hide">
+      <h1>How to connect with</h1>
+      <p class="footer-tabs">
+        <a href="#" data-href="tab1" class="active">HTML &lt;script&gt; tag</a>
+        <a href="#" data-href="tab2">JavaScript code</a>
+        <a href="#" data-href="tab3">NodeJs module</a>
+      </p>
+      <div class="tab-content">
+        <div class="tab1">
+          <ul>
+            <li>
+              1) insert this HTML code in your <span class="tag">&lt;HEAD&gt;</span> <i>before</i> any other scripts:
+              <pre
+                class="html"
+              ><code><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"//<script>document.write(consoleRe.host);</script>/connector.js"</span> <span class="attribute">data-channel</span>=<span class="value">"<script>document.write(consoleRe.channel);</script>"</span> <span class="attribute">id</span>=<span class="value">"consolerescript"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></code></pre>
+            </li>
+            <li>
+              2) add in your JavaScript:
+              <span class="code"
+                ><span class="attribute">console.re.log</span><span class="tag">(</span
+                ><span class="value">'remote log test'</span><span class="tag">);</span></span
+              >
+            </li>
+            <li>3) reload your webpage or webapp, and you should see <span class="value">[LOG]</span> output.</li>
+          </ul>
+        </div>
+        <div class="tab2">
+          <ul>
+            <li>
+              1) insert this code <i>before</i> your own JavaScript code:
+              <pre class="html"><code>
+        <div><span class="attribute">var</span> <span class="tag">consolere</span> = {</div>
+        <div>  <span class="attribute">channel</span>:<span class="string">'<script>document.write(consoleRe.channel);</script>'</span>,</div>
+        <div>  <span class="attribute">api</span>:<span class="string">'//<script>document.write(consoleRe.host);</script>/connector.js'</span>,</div>
+        <span class="attribute">ready</span>: function(c) {var d=document,s=d.createElement('script'),l;s.src=this.api;s.id='consolerescript';s.onreadystatechange=s.onload=function(){if(!l){c();}l=true;};d.getElementsByTagName('head')[0].appendChild(s);}};</code></pre>
+            </li>
+            <li>
+              2) <i>after</i>, in your code use <span class="code"><span class="tag">consolere.ready();</span></span
+              >to wrap console.re API:
+              <pre class="html"><code>
+        <span class="tag">consolere.ready</span><span class="tag">({</span>
+            <span class="attribute">console.re.log</span><span class="tag">(</span><span class="value">'remote log test'</span><span class="tag">);</span>
+        <span class="tag">});</span></code></pre>
+            </li>
+            <li>3) reload your webpage or webapp, and you should see <span class="value">[LOG]</span> output.</li>
+          </ul>
+        </div>
+        <div class="tab3">
+          <ul>
+            <li>
+              1) Install
+              <a href="https://github.com/kurdin/console-remote" target="_new">console-remote client</a> using 'npm' as
+              follows:
+              <pre class="html"><code>$ npm install <span class="tag">console-remote-client</span></code></pre>
+            </li>
+            <li>
+              2) In your node.js app, use 'require' to include module and connect:
+              <pre class="html"><code>
+            <span class="attribute">const</span> <span class="tag">consolere</span> = <span class="attribute">require</span>(<span class="string">'console-remote-client'</span>).<span class="attribute">connect</span>({ server: <span class="string"><script>document.write(consoleRe.prot + '//'); document.write(consoleRe.hostname); consoleRe.port ? document.write(':'+consoleRe.port) : '';</script>'</span>, <span class="string">channel: '<script>document.write(consoleRe.channel);</script>'</span> });
+            </code></pre>
+            </li>
+            <li>
+              3) <i>after</i>, add in your code:
+              <span class="code"
+                ><span class="attribute">console.re.log</span><span class="tag">(</span
+                ><span class="value">'remote log test'</span><span class="tag">);</span> then, restart your app, and you
+                should see <span class="value">[LOG]</span> output.</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="how-to-connect"><a href="#dialog-connect" class="popup-zoom">How to Connect?</a></div>
+
+    <script src="app/js/consoleapp.js"></script>
+    <!-- build:liveReload -->
+    <!-- endbuild -->
+  </body>
+</html>
