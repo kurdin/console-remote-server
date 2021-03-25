@@ -6,7 +6,7 @@ Using this repo you can install a private server for JavaScript Remote Console a
 
 You can try all Console Remote examples at **RunJS.co** <a href="https://runjs.co/s/g7LRa7LU1">https://runjs.co/s/g7LRa7LU1</a>
 
-## Installation
+## Installation and Use
 
 ### Clone repo and install packages
 
@@ -47,11 +47,23 @@ With your browser, open `http://localhost:8090` and you should see Console Remot
 
 <img width="886" alt="Screen Shot 2021-03-21 at 8 51 33 PM" src="https://user-images.githubusercontent.com/6027060/111929517-ee1f1100-8a8c-11eb-831d-217b3889b7af.png">
 
+### Connect to your Private Server 
 
-In your connector script settings, use `server` option to connect to your locally running private server on port 8088
+There are couple of ways to connect from your script to Private server. See all methods https://github.com/kurdin/console-remote/blob/main/README.md#installation-and-use
+
+#### Quick way to connect. 
+
+Install `console-remote-client` package 
+
+```js
+$ npm install console-remote-client
+```
+
+`import` or `require` package `console-remote-client` into your script only once and use `server` option to connect to your locally running private server on port 8088
 
 ```js
 import consolere from 'console-remote-client';
+
 consolere.connect({
   server: 'http://localhost:8088',
   channel: 'my-private-server-channel', // required
@@ -62,7 +74,23 @@ consolere.connect({
 console.log('test log');
 ```
 
+or with `require`
+
+```js
+
+const consolere = require('console-remote-client').connect({
+  server: 'http://localhost:8088',
+  channel: 'my-private-server-channel', // required
+  redirectDefaultConsoleToRemote: true, // optional, default: false
+  disableDefaultConsoleOutput: true, // optional, default: false
+});
+
+console.log('test log');
+```
+
+
 In your browser, go to url `http://localhost:8090/my-private-server-channel` and you should see your `test log` output in the Console App
+
 
 ### Deploy Console Server on Your Own Production Server
 
