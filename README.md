@@ -11,7 +11,7 @@ You can try all Console Remote examples at **RunJS.co** <a href="https://runjs.c
 Clone this private server repo https://github.com/kurdin/console-remote-server
 
 ```sh
-$ git clone https://github.com/kurdin/console-remote-server</textarea></pre></p>
+$ git clone https://github.com/kurdin/console-remote-server
 ```
 
 ### Run Console Server on localhost
