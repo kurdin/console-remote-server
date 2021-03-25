@@ -28,8 +28,10 @@ Console Node server script located in `./console-server` folder. You can change 
 Start server on localhost with port 8088, your full server url will be `http://localhost:8088` , this is where you need to connect from `console-remote` connector
 
 ```sh
-$ node console-server
+$ npm run server
 ```
+
+### Run Console App on localhost
 
 Start console application on `http://localhost:8090`
 
