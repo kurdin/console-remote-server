@@ -51,7 +51,7 @@ With your browser, open `http://localhost:8090` and you should see Console Remot
 
 There are couple of ways to connect from your script to Private server. See all methods https://github.com/kurdin/console-remote/blob/main/README.md#installation-and-use
 
-#### Quick way to connect. 
+#### A quick way to connect
 
 Install `console-remote-client` package 
 
