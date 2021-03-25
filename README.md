@@ -8,13 +8,13 @@ You can try all Console Remote examples at **RunJS.co** <a href="https://runjs.c
 
 ## Installation
 
+### Clone repo and install packages
+
 Clone this private server repo https://github.com/kurdin/console-remote-server
 
 ```sh
 $ git clone https://github.com/kurdin/console-remote-server
 ```
-
-### Run Console Server on localhost
 
 Go to repo folder and install Node packages
 
@@ -23,13 +23,17 @@ $ cd console-remote-server
 $ npm install
 ```
 
+### Run Console Server on localhost
+
 Console Node server script located in `./console-server` folder. You can change `.env.development` file to modify server options
 
-Start server on localhost with port 8088, your full server url will be `http://localhost:8088` , this is where you need to connect from `console-remote` connector
+Start console server on localhost port 8088
 
 ```sh
 $ npm run server
 ```
+
+Your full server url will be `http://localhost:8088` , this is where you need to connect from `console-remote` connector
 
 ### Run Console App on localhost
 
