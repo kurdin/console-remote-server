@@ -1,12 +1,11 @@
 {
   "name": "console-remote-server",
-  "version": "2.1.14",
+  "version": "2.1.16",
   "description": "Private Console Remote Server. Self-Hosted Server and Application for Remote JavaScript Console",
   "dependencies": {
     "@adamwood/gulp-cssmin": "^0.2.1",
     "chokidar": "~3.5.1",
-    "configuration": "~0.1.1",
-    "console-remote-client": "^2.1.15",
+    "console-remote-client": "^2.1.16",
     "custom-env": "^2.0.1",
     "http-rewrite-middleware": "^0.1.6",
     "is-kindof": "^3.0.1",
@@ -16,7 +15,7 @@
     "pump": "^1.0.3",
     "socket.io": "^3.1.1",
     "sprintf-js": "~1.0.2",
-    "underscore": "~1.13.1",
+    "underscore": "1.13.1",
     "ws": "^1.1.5"
   },
   "devDependencies": {
