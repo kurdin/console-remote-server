@@ -1,2 +1,2 @@
 web: npm start
-worker: npm run server
+worker: cd console-server/ && npm run server
