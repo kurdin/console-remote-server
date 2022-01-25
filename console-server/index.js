@@ -11,6 +11,13 @@ const io = require('socket.io')(app, {
 		methods: ['GET', 'POST'],
 	},
 });
+//eslint-disable-next-line
+io.origins((origin, callback) => {
+	if (!origin) {
+		return callback('origin not allowed', false);
+	}
+	return callback(null, true);
+});
 
 // eslint-disable-next-line no-console
 console.log(
