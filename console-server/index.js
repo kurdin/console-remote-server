@@ -1,7 +1,22 @@
-const app = require('http').createServer();
+const http = require('http');
 const { version } = require('../package.json');
 var cors = require('cors');
 
+
+var app = http.createServer(function (req,res){
+	// Set CORS headers
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Request-Method', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+	res.setHeader('Access-Control-Allow-Headers', req.header.origin);
+	if ( req.method === 'OPTIONS' ) {
+		res.writeHead(200);
+		res.end();
+		return;
+	}
+	return;
+	// ...
+});
 app.use(cors());
 
 require('custom-env').env(process.env.NODE_ENV || 'development');
