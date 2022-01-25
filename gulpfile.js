@@ -158,7 +158,7 @@ const connectServer = (cb) => {
 	connect.server(
 		{
 			name: 'Console.Re WWW Dev',
-			host: 'localhost',
+			host: '0.0.0.0',
 			port: process.env.PORT || 80,
 			root: paths.build,
 			fallback: paths.build + paths.app + 'consoleapp.html',
