@@ -8,6 +8,7 @@ const ignoreList = process.env.IGNORE_CHANNELS ? process.env.IGNORE_CHANNELS.spl
 
 const io = require('socket.io')(app, {
 	cors: {
+		origin: '*',
 		methods: ['GET', 'POST'],
 		allowedHeaders: ["Access-Control-Allow-Origin"],
 	},
@@ -22,13 +23,6 @@ console.log(
 	}`
 );
 
-io.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", '*');
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-    next();
-});
 
 app.listen(process.env.SERVER_PORT || 80);
 io.serveClient(false);
