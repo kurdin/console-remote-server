@@ -159,7 +159,7 @@ const connectServer = (cb) => {
 		{
 			name: 'Console.Re WWW Dev',
 			host: 'localhost',
-			port: 8090,
+			port: 80,
 			root: paths.build,
 			fallback: paths.build + paths.app + 'consoleapp.html',
 			debug: true,
@@ -170,7 +170,7 @@ const connectServer = (cb) => {
 		},
 		function () {
 			this.server.on('start', () => {
-				open('http://localhost:8090', { app: ['google chrome'] });
+				open('http://localhost:80', { app: ['google chrome'] });
 				cb();
 			});
 		}
