@@ -170,7 +170,7 @@ const connectServer = (cb) => {
 		},
 		function () {
 			this.server.on('start', () => {
-				open('http://localhost:80', { app: ['google chrome'] });
+				open(`http://localhost:${process.env.PORT}`, { app: ['google chrome'] });
 				cb();
 			});
 		}
