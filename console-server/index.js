@@ -9,6 +9,7 @@ const ignoreList = process.env.IGNORE_CHANNELS ? process.env.IGNORE_CHANNELS.spl
 const io = require('socket.io')(app, {
 	cors: {
 		methods: ['GET', 'POST'],
+		allowedHeaders: ["Access-Control-Allow-Origin"],
 	},
 });
 
