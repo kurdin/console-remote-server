@@ -1,5 +1,8 @@
 const app = require('http').createServer();
 const { version } = require('../package.json');
+var cors = require('cors');
+
+app.use(cors());
 
 require('custom-env').env(process.env.NODE_ENV || 'development');
 
@@ -8,11 +11,10 @@ const ignoreList = process.env.IGNORE_CHANNELS ? process.env.IGNORE_CHANNELS.spl
 
 const io = require('socket.io')(app, {
 	cors: {
+		origin: '*',
 		methods: ['GET', 'POST'],
 	},
 });
-//eslint-disable-next-line
-io.set('origins', '*:*');
 
 // eslint-disable-next-line no-console
 console.log(
