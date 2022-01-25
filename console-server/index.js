@@ -12,12 +12,7 @@ const io = require('socket.io')(app, {
 	},
 });
 //eslint-disable-next-line
-io.origins((origin, callback) => {
-	if (!origin) {
-		return callback('origin not allowed', false);
-	}
-	return callback(null, true);
-});
+io.set('origins', '*:*');
 
 // eslint-disable-next-line no-console
 console.log(
