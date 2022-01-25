@@ -7,11 +7,11 @@ if (process.env.PORT) process.env.SERVER_PORT = process.env.PORT;
 const ignoreList = process.env.IGNORE_CHANNELS ? process.env.IGNORE_CHANNELS.split(',') : [];
 
 const io = require('socket.io')(app, {
-	cors: {
-		origin: true,
-		methods: ['GET', 'POST'],
-		allowedHeaders: ["Access-Control-Allow-Origin"],
-	},
+	// cors: {
+	// 	origin: true,
+	// 	methods: ['GET', 'POST'],
+	// 	allowedHeaders: ["Access-Control-Allow-Origin"],
+	// },
 	handlePreflightRequest: (req, res) => {
         const headers = {
             "Access-Control-Allow-Headers": "Content-Type, Authorization",
