@@ -7,21 +7,9 @@ if (process.env.PORT) process.env.SERVER_PORT = process.env.PORT;
 const ignoreList = process.env.IGNORE_CHANNELS ? process.env.IGNORE_CHANNELS.split(',') : [];
 
 const io = require('socket.io')(app, {
-	// cors: {
-	// 	origin: true,
-	// 	methods: ['GET', 'POST'],
-	// 	allowedHeaders: ["Access-Control-Allow-Origin"],
-	// },
-	handlePreflightRequest: (req, res) => {
-        const headers = {
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
-            "Access-Control-Allow-Credentials": true
-        };
-        res.writeHead(200, headers);
-        res.end();
-    }
-
+	cors: {
+		methods: ['GET', 'POST'],
+	},
 });
 
 // eslint-disable-next-line no-console
@@ -32,7 +20,6 @@ console.log(
 		process.env.SERVER_PORT ? `port: ${process.env.SERVER_PORT}` : 80
 	}`
 );
-
 
 app.listen(process.env.SERVER_PORT || 80);
 io.serveClient(false);
