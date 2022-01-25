@@ -1,6 +1,6 @@
 const http = require('http');
 const { version } = require('../package.json');
-var cors = require('cors');
+// var cors = require('cors');
 
 
 var app = http.createServer(function (req,res){
@@ -17,7 +17,6 @@ var app = http.createServer(function (req,res){
 	return;
 	// ...
 });
-app.use(cors());
 
 require('custom-env').env(process.env.NODE_ENV || 'development');
 
