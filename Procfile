@@ -1,1 +1,1 @@
-web: npm i && sudo npm start
+web: npm i && npm start
