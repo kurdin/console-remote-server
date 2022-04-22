@@ -6,6 +6,8 @@ Using this repo you can install a private server for JavaScript Remote Console a
 
 You can try all Console Remote examples at **RunJS.co** <a href="https://runjs.co/s/g7LRa7LU1">https://runjs.co/s/g7LRa7LU1</a>
 
+## This version also supports CORS and is built to work with Heroku
+
 ## Installation and Use
 
 ### Clone repo and install packages

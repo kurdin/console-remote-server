@@ -1,13 +1,26 @@
-const app = require('http').createServer();
+const http = require('http');
 const { version } = require('../package.json');
+// var cors = require('cors');
+
+
+var app = http.createServer(function (req,res){
+	// Set CORS headers
+	res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+	res.setHeader('Access-Control-Request-Method', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+	res.setHeader('Access-Control-Allow-Headers', req.headers.origin);
+	return;
+	// ...
+});
 
 require('custom-env').env(process.env.NODE_ENV || 'development');
 
-if (process.env.USE_PORT) process.env.SERVER_PORT = process.env.USE_PORT;
+if (process.env.PORT) process.env.SERVER_PORT = process.env.PORT;
 const ignoreList = process.env.IGNORE_CHANNELS ? process.env.IGNORE_CHANNELS.split(',') : [];
 
 const io = require('socket.io')(app, {
 	cors: {
+		origin: '*',
 		methods: ['GET', 'POST'],
 	},
 });
@@ -17,11 +30,11 @@ console.log(
 	`\nRemote Console Personal Server ver: ${version} host: ${process.env.SERVER_PROTOCOL}://${
 		process.env.SERVER_DOMAIN
 	} env: ${process.env.NODE_ENV ? process.env.NODE_ENV : 'development'} ${
-		process.env.SERVER_PORT ? `port: ${process.env.SERVER_PORT}` : 81
+		process.env.SERVER_PORT ? `port: ${process.env.SERVER_PORT}` : 80
 	}`
 );
 
-app.listen(process.env.SERVER_PORT || 81);
+app.listen(process.env.SERVER_PORT || 80);
 io.serveClient(false);
 io.use((socket, next) => {
 	if (socket.request.headers['x-consolere']) return next();
