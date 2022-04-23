@@ -122,7 +122,7 @@ const updateHtml = () => {
 			replaceTemplate(
 				{
 					consoleVersion: version,
-					consoleHost: process.env.APP_CONNECT_HOST,
+					consoleHost: process.env.SERVER_DOMAIN,
 				},
 				{ prefix: '{{', suffix: '}}' }
 			)
