@@ -122,7 +122,7 @@ const updateHtml = () => {
 			replaceTemplate(
 				{
 					consoleVersion: version,
-					consoleHost: process.env.SERVER_DOMAIN,
+					consoleHost: `${process.env.SERVER_DOMAIN}${process.env.APP_PORT ? `: ${process.env.APP_PORT}` : ''}`,
 				},
 				{ prefix: '{{', suffix: '}}' }
 			)
@@ -158,8 +158,8 @@ const connectServer = (cb) => {
 	connect.server(
 		{
 			name: 'Console.Re WWW Dev',
-			host: '0.0.0.0',
-			port: process.env.PORT || 80,
+			host: process.env.APP_DOMAIN || '0.0.0.0',
+			port: process.env.APP_PORT || 80,
 			root: paths.build,
 			fallback: paths.build + paths.app + 'consoleapp.html',
 			debug: true,
@@ -170,7 +170,7 @@ const connectServer = (cb) => {
 		},
 		function () {
 			this.server.on('start', () => {
-				open(`http://localhost:${process.env.PORT}`, { app: ['google chrome'] });
+				open(`http://localhost:${process.env.APP_PORT}`, { app: ['google chrome'] });
 				cb();
 			});
 		}

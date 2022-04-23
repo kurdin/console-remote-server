@@ -39,13 +39,13 @@ Your full server url will be `http://localhost:8088` , this is where you need to
 
 ### Run Console App on localhost
 
-Start console web application on `http://localhost`
+Start console web application on `http://localhost:3000`
 
 ```sh
 $ npm start
 ```
 
-With your browser, open `http://localhost` and you should see Console Remote Web App
+With your browser, open `http://localhost:3000` and you should see Console Remote Web App
 
 <img width="886" alt="Screen Shot 2021-03-21 at 8 51 33 PM" src="https://user-images.githubusercontent.com/6027060/111929517-ee1f1100-8a8c-11eb-831d-217b3889b7af.png">
 
@@ -89,7 +89,7 @@ const consolere = require('console-remote-client').connect({
 console.log('test log');
 ```
 
-In your browser, go to url `http://localhost/my-private-server-channel` and you should see your `test log` output in the Console App
+In your browser, go to url `http://localhost:3000/my-private-server-channel` and you should see your `test log` output in the Console App
 
 ### Deploy Console Server on Your Own Production Server
 
