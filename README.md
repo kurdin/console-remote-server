@@ -140,6 +140,6 @@ Copyright (c) 2012 by Jarrod Overson
 
 ## License
 
-This for Non-Commercial Use ONLY (Personal)
+MIT License
 
 See LICENSE.md
