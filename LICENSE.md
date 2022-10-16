@@ -1,19 +1,21 @@
-© 2021 Sergey Kurdin. All rights reserved.
+MIT License
 
-This License Agreement contains important legal terms, and Licensee acknowledges that by completing the purchase process and/or checking “agree”, Licensee has read the entire License Agreement and agrees to the terms herein, including, without limitation Section 9 (Important General Legal Provisions). Creative Market offers different types of license agreements and the one selected at the time of purchase applies to Licensee’s use of the Licensed Asset.
+Copyright (c) 2022 Sergey Kurdin
 
-THIS LICENSE AGREEMENT PERMITS NON-COMMERCIAL (PERSONAL) USE ONLY
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-YOU CAN NOT CREATE YOUR OWN PRODUCTS AND CHANGE THE MONEY FROM PRIVATE OR PUBLIC SERVICES USING THIS SOFTWARE. YOU CAN NOT SELL OR RESELL ANY PARTS OF THIS SOFTWARE WITHOUT GIVING EXPLICIT AUTHORIZATION FROM COPYRIGHT HOLDER.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-COMMERCIAL USE AND NON-COMMERCIAL USE DEFINED
-
-This License Agreement permits only Non-commercial use of the Licensed Asset, as expressly specified in Section 4 (Permitted Uses and Quantity/Impression Limitations); all Commercial use is expressly prohibited.
-
-- Commercial Use
-
-“Commercial” use is any use: (i) that involves an exchange of money or other consideration, (ii) that promotes a business (e.g., sole proprietorship, corporation, or partnership), product, or service, or (iii) where financial gain or other consideration is either sought or a result, directly or indirectly, of Licensee’s use of the Licensed Asset. If any one or more of the criteria in (i), (ii), and (iii) is met, then the use is deemed “Commercial”.
-
-- Non-Commercial Use (Personal)
-
-“Non-commercial” use is a use for solely personal purposes; any use that meets the definition of “Commercial use” can not be a Non-commercial use.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
