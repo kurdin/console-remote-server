@@ -14,7 +14,7 @@ RUN apt-get install -y nginx
 
 # Build app
 WORKDIR /app
-COPY .. .
+COPY ./ ./
 RUN npm install
 COPY docker/.env.docker .
 RUN envsubst < .env.docker > .env.production
