@@ -6,3 +6,5 @@ build
 .build
 rev-manifest.json
 .idea
+.git
+.gitignore
