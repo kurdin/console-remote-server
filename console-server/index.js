@@ -5,6 +5,7 @@ const { version } = require('../package.json');
 
 var app = http.createServer(function (req,res){
 	// Set CORS headers
+	console.log(req.headers)
 	res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
 	res.setHeader('Access-Control-Request-Method', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');

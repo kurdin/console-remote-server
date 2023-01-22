@@ -97,7 +97,7 @@ const buildCss = (cb) =>
 		[
 			gulp.src([paths.www + 'src/css/styles.css', paths.www + 'src/css/codemirror5.css']),
 			print(),
-			production ? cssmin() : util.noop(),
+			production ? cssmin({ rebase: false }) : util.noop(),
 			rename({ basename: 'bundle' }),
 			concat('www-bundle.css'),
 			rev(),
@@ -249,7 +249,7 @@ const buildAppCss = (cb) => {
 		[
 			gulp.src(paths.app + 'src/css/consoleapp.css'),
 			print(),
-			production ? cssmin() : util.noop(),
+			production ? cssmin({ rebase: false })  : util.noop(),
 			rev(),
 			gulp.dest(paths.build + 'app/css'),
 			rev.manifest(manifest, {

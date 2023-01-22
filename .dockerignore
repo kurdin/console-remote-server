@@ -1,0 +1,9 @@
+logs
+node_modules
+public
+build
+.build
+rev-manifest.json
+.idea
+.git
+.gitignore
