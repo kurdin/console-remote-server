@@ -133,7 +133,8 @@ See examples of HTTP server configuration in `config/console.nginx.example.conf`
 
 Copyright (c) 2012 - 2021 Sergey Kurdin https://github.com/kurdin
 
-Check my JavaScript Playground Web App https://runjs.co
+Check my PasteBar - Limitless Clipboard for Mac and Windows - https://github.com/PasteBar/PasteBarApp
+Check my JavaScript Playground Web App https://runjs.co/s/OAZfi2HI7
 
 Based on http://jsoverson.github.io/rcl
 Copyright (c) 2012 by Jarrod Overson
